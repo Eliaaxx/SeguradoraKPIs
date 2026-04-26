@@ -39,4 +39,4 @@ O projeto nasceu de uma análise exploratória inicial utilizando **PySpark**, o
 ## 🚀 Como rodar localmente
 1. Clone o repositório:
    ```bash
-   git clone [https://github.com/SEU_USUARIO/SeguradoraKPIs.git](https://github.com/SEU_USUARIO/SeguradoraKPIs.git)
+   git clone [https://github.com/Eliaaxx/SeguradoraKPIs.git](https://github.com/Eliaaxx/SeguradoraKPIs.git)
