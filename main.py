@@ -72,7 +72,7 @@ st.markdown("""
 @st.cache_data
 def load_data():
     # Tenta primeiro o arquivo principal; se não existir, usa o alternativo
-    base_path = Path(r"C:\Users\guest\Desktop\Insurance")
+    base_path = Path(r"C:\Users\guest\Desktop\Insurance.csv")
     csv_path = base_path / "insurance.csv"
     if not csv_path.exists():
         csv_path = base_path / "insurance.csv"
