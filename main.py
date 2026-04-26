@@ -75,7 +75,7 @@ def load_data():
     base_path = Path(r"C:\Users\guest\Desktop\Insurance")
     csv_path = base_path / "insurance.csv"
     if not csv_path.exists():
-        csv_path = base_path / "isurance.csv"
+        csv_path = base_path / "insurance.csv"
 
     
     df = pd.read_csv(csv_path, sep=None, engine="python")
