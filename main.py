@@ -72,10 +72,10 @@ st.markdown("""
 @st.cache_data
 def load_data():
     # Tenta primeiro o arquivo principal; se não existir, usa o alternativo
-    base_path = Path(r"C:\Users\guest\Desktop\Insurance.csv")
-    csv_path = base_path / "insurance.csv"
+    base_path = Path(r"C:\Users\guest\Desktop\Insurancedata.csv")
+    csv_path = base_path / "insurancedata.csv"
     if not csv_path.exists():
-        csv_path = base_path / "insurance.csv"
+        csv_path = base_path / "insurancedata.csv"
 
     
     df = pd.read_csv(csv_path, sep=None, engine="python")
