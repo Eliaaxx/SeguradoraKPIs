@@ -71,17 +71,45 @@ st.markdown("""
 
 @st.cache_data
 def load_data():
-    # Tenta primeiro o arquivo principal; se não existir, usa o alternativo
-    base_path = Path(r"C:\Users\guest\Desktop\Insurancedata.csv")
-    csv_path = base_path / "insurancedata.csv"
-    if not csv_path.exists():
-        csv_path = base_path / "insurancedata.csv"
-
+    # 1. Pega o caminho da pasta onde o main.py está rodando
+    # Isso funciona tanto no seu Windows quanto no servidor do Streamlit
+    base_path = Path(__file__).parent 
     
+    # 2. O nome EXATO do arquivo que está no seu GitHub
+    # No seu log apareceu 'insurance.csv', mas o arquivo real é 'insurancedata.csv'
+    nome_arquivo = "insurancedata.csv"
+    
+    csv_path = base_path / nome_arquivo
+    
+    # 3. Verificação de segurança: se não achar o arquivo, ele te avisa o porquê
+    if not csv_path.exists():
+        st.error(f"Arquivo não encontrado: {nome_arquivo}")
+        st.write(f"O Python procurou em: {csv_path}")
+        st.write("Arquivos que ele achou na pasta:", os.listdir(base_path))
+        return pd.DataFrame()
+
+    # 4. Carrega o CSV detectando automaticamente o delimitador
+    # (funciona para ',' e ';')
     df = pd.read_csv(csv_path, sep=None, engine="python")
+    df.columns = df.columns.str.strip()
+
+    required_columns = [
+        "Date_start_contract",
+        "Date_birth",
+        "Date_last_renewal",
+        "Date_next_renewal",
+        "Area",
+        "Type_risk",
+        "Premium",
+        "Cost_claims_year",
+    ]
+    missing_columns = [col for col in required_columns if col not in df.columns]
+    if missing_columns:
+        st.error(f"Colunas obrigatórias ausentes no CSV: {', '.join(missing_columns)}")
+        st.write("Colunas encontradas:", list(df.columns))
+        st.stop()
     
     # Conversão de datas
-     
     df['Date_start_contract'] = pd.to_datetime(df['Date_start_contract'], errors='coerce', dayfirst=True)
     df['Date_birth'] = pd.to_datetime(df['Date_birth'], errors='coerce', dayfirst=True)
     df['Date_last_renewal'] = pd.to_datetime(df['Date_last_renewal'], errors='coerce', dayfirst=True)
