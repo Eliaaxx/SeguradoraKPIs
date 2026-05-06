@@ -15,13 +15,13 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-#Centralização do titulo
+# Centralização do titulo
 st.markdown("""
     <h1 style='text-align: center;'>Insurance Analytics</h1>
     """, unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center;'>1981 - 2018</h3>", unsafe_allow_html=True)
 
-# Estilização Base (Dark Mode e Cyano)
+# Estilização Base (Dark Mode & Cyano)
 st.markdown("""
     <style>
     .main {
@@ -71,25 +71,17 @@ st.markdown("""
 
 @st.cache_data
 def load_data():
-    # 1. Pega o caminho da pasta onde o main.py está rodando
-    # Isso funciona tanto no seu Windows quanto no servidor do Streamlit
     base_path = Path(__file__).parent 
-    
-    # 2. O nome EXATO do arquivo que está no seu GitHub
-    # No seu log apareceu 'insurance.csv', mas o arquivo real é 'insurancedata.csv'
     nome_arquivo = "insurancedata.csv"
     
     csv_path = base_path / nome_arquivo
     
-    # 3. Verificação de segurança: se não achar o arquivo, ele te avisa o porquê
     if not csv_path.exists():
         st.error(f"Arquivo não encontrado: {nome_arquivo}")
         st.write(f"O Python procurou em: {csv_path}")
         st.write("Arquivos que ele achou na pasta:", os.listdir(base_path))
         return pd.DataFrame()
 
-    # 4. Carrega o CSV detectando automaticamente o delimitador
-    # (funciona para ',' e ';')
     df = pd.read_csv(csv_path, sep=None, engine="python")
     df.columns = df.columns.str.strip()
 
